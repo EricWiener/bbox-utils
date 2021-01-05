@@ -4,6 +4,9 @@
 .. image:: https://coveralls.io/repos/github/EricWiener/bbox-utils/badge.svg?branch=master
     :target: https://coveralls.io/github/EricWiener/bbox-utils?branch=master
 
+.. image:: https://img.shields.io/pypi/v/bbox-utils
+   :alt: PyPI
+
 ==========
 bbox-utils
 ==========
