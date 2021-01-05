@@ -5,7 +5,7 @@
     :target: https://coveralls.io/github/EricWiener/bbox-utils?branch=master
 
 .. image:: https://img.shields.io/pypi/v/bbox-utils
-   :alt: PyPI
+    :alt: PyPI
 
 ==========
 bbox-utils
@@ -13,6 +13,8 @@ bbox-utils
 
 
 Utilities to easily convert between different bounding box formats (YOLO, XYWH, XYXY, etc.).
+
+You can install bbox-utils with PyPI: `pip install bbox-utils`.
 
 Description
 ===========
