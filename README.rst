@@ -13,7 +13,7 @@ Utilities to easily convert between different bounding box formats (YOLO, XYWH, 
 
 Description
 ===========
-You can find documentation for the project at `here <https://ericwiener.github.io/bbox-utils/>`_.
+You can find documentation for the project at `here <https://bbox-utils.readthedocs.io/en/latest/>`_.
 
 **2D Bounding Box Conversions**
 
