@@ -1,7 +1,0 @@
-bbox_utils
-==========
-
-.. toctree::
-   :maxdepth: 4
-
-   bbox_utils
