@@ -6,7 +6,7 @@
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = .
-BUILDDIR      = docs
+BUILDDIR      = _build
 AUTODOCDIR    = api
 
 # User-friendly check for sphinx-build
