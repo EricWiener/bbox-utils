@@ -9,17 +9,24 @@ bbox-utils
 ==========
 
 
-Add a short description here!
-
+Utilities to easily convert between different bounding box formats (YOLO, XYWH, XYXY, etc.).
 
 Description
 ===========
+You can find documentation for the project at `here <ericwiener.github.io/bbox-utils/>`_.
 
-A longer description of your project goes here...
+**2D Bounding Box Conversions**
 
+- List of points [top left, top right, bottom right, bottom left]
+- XYWH: top left, width, height
+- XYXY: top left, bottom right
+- YOLO
 
-Note
-====
+**3D Bounding Box Conversions**
+You can create a 3D bounding box with either:
 
-This project has been set up using PyScaffold 3.3. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+- A center point, width, height, depth, and rotation
+- The eight vertices
+
+You can convert between the two forms and also get a
+triangular polygon to use for plotting triangular meshes.
