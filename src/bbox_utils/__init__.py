@@ -10,4 +10,4 @@ except DistributionNotFound:
 finally:
     del get_distribution, DistributionNotFound
 
-from .bbox_utils import BoundingBox  # noqa: F401
+from .bbox_2d import BoundingBox  # noqa: F401

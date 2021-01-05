@@ -83,12 +83,12 @@ class BoundingBox:
         cy = float(cy) / img_h
         w = float(self.width) / img_w
         h = float(self.height) / img_h
-        return np.array([cx, cy, w, h], dtype=int)
+        return np.array([cx, cy, w, h])
 
     @property
     def center(self):
         cx = self.tl[0] + self.width // 2
-        cy = self.tl[0] + self.height // 2
+        cy = self.tl[1] + self.height // 2
         return np.array([cx, cy]).astype(int)
 
     @property
