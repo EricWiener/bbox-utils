@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.com/EricWiener/bbox-utils.svg?branch=master
+    :target: https://travis-ci.com/EricWiener/bbox-utils
+
+.. image:: https://coveralls.io/repos/github/EricWiener/bbox-utils/badge.svg?branch=master
+    :target: https://coveralls.io/github/EricWiener/bbox-utils?branch=master
+
 ==========
 bbox-utils
 ==========
