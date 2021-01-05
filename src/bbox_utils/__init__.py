@@ -9,3 +9,5 @@ except DistributionNotFound:
     __version__ = "unknown"
 finally:
     del get_distribution, DistributionNotFound
+
+from .bbox_utils import BoundingBox  # noqa: F401
