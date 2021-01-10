@@ -2,25 +2,45 @@
 bbox-utils
 ==========
 
-This is the documentation of **bbox-utils**.
+bbox-utils allows you to easily convert between different bounding box formats (YOLO, XYWH, XYXY, etc.).
 
-.. note::
+It's as simple to use as::
 
-    This is the main page of your project's `Sphinx`_ documentation.
-    It is formatted in `reStructuredText`_. Add additional pages
-    by creating rst-files in ``docs`` and adding them to the `toctree`_ below.
-    Use then `references`_ in order to link them from this page, e.g.
-    :ref:`authors` and :ref:`changes`.
+    xy1 = np.array([100, 50])
+    xy2 = np.array([200, 75])
+    bbox = BoundingBox.from_xyxy(xy1, xy2)
 
-    It is also possible to refer to the documentation of other Python packages
-    with the `Python domain syntax`_. By default you can reference the
-    documentation of `Sphinx`_, `Python`_, `NumPy`_, `SciPy`_, `matplotlib`_,
-    `Pandas`_, `Scikit-Learn`_. You can add more by extending the
-    ``intersphinx_mapping`` in your Sphinx's ``conf.py``.
+    # Get XYWH
+    xy, w, h = bbox.to_xywh()
 
-    The pretty useful extension `autodoc`_ is activated by default and lets
-    you include documentation from docstrings. Docstrings can be written in
-    `Google style`_ (recommended!), `NumPy style`_ and `classical style`_.
+    # Get XYXY
+    xy1, xy2 = bbox.to_xyxy()
+
+    # Get YOLO
+    image_dim = 640, 420
+    yolo_bbox = bbox.to_yolo(image_dim)
+
+
+You can install bbox-utils with PyPI: ``pip install bbox-utils``
+
+Conversions
+===========================
+
+2D Bounding Box Conversions:
+----------------------------
+* List of points [top left, top right, bottom right, bottom left]
+* XYWH: top left, width, height
+* XYXY: top left, bottom right
+* YOLO
+* 3D Bounding Box Conversions You can create a 3D bounding box with either:
+
+3D Bounding Box Conversions:
+----------------------------
+You can create a 3D bounding box with either:
+* A center point, width, height, depth, and rotation
+* The eight vertices
+
+You can convert between the two forms and also get a triangular polygon to use for plotting triangular meshes.
 
 
 Contents
