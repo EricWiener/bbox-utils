@@ -60,7 +60,7 @@ def order_points(pts):
 
 def point_within_dimensions(point, image_dimensions):
     """Checks to see if a point falls inside an image's dimension.
-    Works for any number of dimensions.
+    Works for any number of dimensions. Acceptable range is [0, dim)
 
     Args:
         point (np.array): array with the point's coordinates
@@ -77,6 +77,6 @@ def point_within_dimensions(point, image_dimensions):
 
     within_bounds = True
     for i, val in enumerate(point):
-        within_bounds = within_bounds and 0 < val < image_dimensions[i]
+        within_bounds = within_bounds and 0 <= val < image_dimensions[i]
 
     return within_bounds

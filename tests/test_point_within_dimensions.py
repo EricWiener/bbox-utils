@@ -14,10 +14,17 @@ def test_point_within_dimensions_true():
 
 
 def test_point_within_dimensions_border():
-    """Make sure a point on the border is rejected as out of bounds"""
+    """Make sure a point on the non-zero border is rejected as out of bounds"""
     point = np.array([100, 20])
     image_dimensions = np.array([100, 100])
     assert not point_within_dimensions(point, image_dimensions)
+
+
+def test_point_with_zero_value_is_good():
+    """Make sure a point with zero is okay"""
+    point = np.array([0, 20])
+    image_dimensions = np.array([100, 100])
+    assert point_within_dimensions(point, image_dimensions)
 
 
 def test_point_within_dimensions_invalid_sizes():

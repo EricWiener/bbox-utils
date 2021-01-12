@@ -102,10 +102,10 @@ class BoundingBox:
 
         # Make sure all points are positive
         assert (
-            top_left[0] > 0 and top_left[1] > 0
+            top_left[0] >= 0 and top_left[1] >= 0
         ), "top_left point has negative value {}".format(top_left)
         assert (
-            bottom_right[0] > 0 and bottom_right[1] > 0
+            bottom_right[0] >= 0 and bottom_right[1] >= 0
         ), "bottom_right point has negative value {}".format(bottom_right)
 
         t_x, t_y = top_left
@@ -146,7 +146,10 @@ class BoundingBox:
         h = float(self.height) / img_h
 
         assert (
-            0.0 < cx < 1.0 and 0.0 < cy < 1.0 and 0.0 < w < 1.0 and 0.0 < h < 1.0
+            0.0 <= cx <= 1.0
+            and 0.0 <= cy <= 1.0
+            and 0.0 <= w <= 1.0
+            and 0.0 <= h <= 1.0
         ), "All YOLO values should be normalize between [0, 1]."
 
         return np.array([cx, cy, w, h])

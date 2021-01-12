@@ -157,6 +157,16 @@ def test_bounding_to_yolo_small_box():
     assert np.allclose(yolo, np.array([0.69314236, 0.99623843, 0.0171441, 0.00665509]))
 
 
+def test_bounding_to_yolo_tl_at_zero():
+    """Make sure YOLO conversion works correctly with a small bounding box"""
+    image_dim = np.array([3648, 5472])
+    xy1 = np.array([4360, 0])
+    xy2 = np.array([4397, 998])
+    bbox = BoundingBox.from_xyxy(xy1, xy2)
+    yolo = bbox.to_yolo(image_dim)
+    assert np.allclose(yolo, np.array([0.8000731, 0.13678728, 0.0067617, 0.27357456]))
+
+
 def test_bounding_box_center():
     xywh = np.array([2369, 2975, 74, 201])
     xy = xywh[:2]
