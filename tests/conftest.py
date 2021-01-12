@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-    Dummy conftest.py for bbox_utils.
+    Dummy conftest.py for bbox.
 
     If you don't know what this is for, just leave it empty.
     Read more about conftest.py under:

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
+import numpy as np
 import pytest
 
-import numpy as np
-
-from bbox_utils import BoundingBox
+from bbox import BoundingBox
 
 __author__ = "Eric Wiener"
 __copyright__ = "Eric Wiener"

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
+import numpy as np
 import pytest
 
-import numpy as np
-
-from bbox_utils.utils import point_within_dimensions
+from bbox.utils import point_within_dimensions
 
 
 def test_point_within_dimensions_true():

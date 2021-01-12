@@ -1,6 +1,6 @@
 import numpy as np
 
-from bbox_utils.utils import order_points, point_within_dimensions
+from bbox.utils import order_points, point_within_dimensions
 
 
 class BoundingBox:

@@ -28,7 +28,7 @@ repos:
 #       --remove-unused-variables,
 #     ]
 
-- repo: http://github.com/timothycrosley/isort
+- repo: https://github.com/pycqa/isort
   rev: 5.7.0
   hooks:
   - id: isort
@@ -41,7 +41,7 @@ repos:
 
 ## If like to embrace black styles even in the docs:
 # - repo: https://github.com/asottile/blacken-docs
-#   rev: v1.8.0
+#   rev: v1.9.1
 #   hooks:
 #   - id: blacken-docs
 #     additional_dependencies: [black]

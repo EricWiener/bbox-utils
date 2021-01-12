@@ -32,8 +32,9 @@ tags
 # Unittest and coverage
 htmlcov/*
 .coverage
+.coverage.*
 .tox
-junit.xml
+junit*.xml
 coverage.xml
 .pytest_cache/
 
@@ -49,3 +50,4 @@ MANIFEST
 
 # Per-project virtualenvs
 .venv*/
+.conda*/

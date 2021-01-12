@@ -1,20 +1,8 @@
-.. image:: https://travis-ci.com/EricWiener/bbox-utils.svg?branch=master
-    :target: https://travis-ci.com/EricWiener/bbox-utils
-
-.. image:: https://coveralls.io/repos/github/EricWiener/bbox-utils/badge.svg?branch=master
-    :target: https://coveralls.io/github/EricWiener/bbox-utils?branch=master
-
-.. image:: https://img.shields.io/pypi/v/bbox-utils
-    :alt: PyPI
-
 ==========
 bbox-utils
 ==========
 
-
 Utilities to easily convert between different bounding box formats (YOLO, XYWH, XYXY, etc.).
-
-You can install bbox-utils with PyPI: ``$ pip install bbox-utils``.
 
 Description
 ===========
@@ -35,3 +23,26 @@ You can create a 3D bounding box with either:
 
 You can convert between the two forms and also get a
 triangular polygon to use for plotting triangular meshes.
+
+Making Changes & Contributing
+=============================
+
+This project uses `pre-commit`_, please make sure to install it before making any
+changes::
+
+    pip install pre-commit
+    cd bbox-utils
+    pre-commit install
+
+It is a good idea to update the hooks to the latest version::
+
+    pre-commit autoupdate
+
+
+.. _pre-commit: http://pre-commit.com/
+
+Note
+====
+
+This project has been set up using PyScaffold 4.0rc1. For details and usage
+information on PyScaffold see https://pyscaffold.org/.
