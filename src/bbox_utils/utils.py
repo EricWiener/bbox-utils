@@ -56,3 +56,27 @@ def order_points(pts):
     # return the coordinates in top-left, top-right,
     # bottom-right, and bottom-left order
     return np.array([tl, tr, br, bl], dtype="float32")
+
+
+def point_within_dimensions(point, image_dimensions):
+    """Checks to see if a point falls inside an image's dimension.
+    Works for any number of dimensions.
+
+    Args:
+        point (np.array): array with the point's coordinates
+        image_dimensions (np.array): array with the image dimensions
+
+    Returns:
+        bool: whether the point lies within the dimensions
+    """
+    assert len(point) == len(
+        image_dimensions
+    ), "Point dimensions {} doesn't equal image dimension {}".format(
+        len(point), len(image_dimensions)
+    )
+
+    within_bounds = True
+    for i, val in enumerate(point):
+        within_bounds = within_bounds and 0 < val < image_dimensions[i]
+
+    return within_bounds
