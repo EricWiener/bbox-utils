@@ -1,6 +1,6 @@
 import numpy as np
 
-from bbox_utils.utils import order_points
+from bbox_utils.utils import order_points, point_within_dimensions
 
 
 class BoundingBox:
@@ -15,6 +15,22 @@ class BoundingBox:
         self.tl, self.tr, self.br, self.bl = (
             order_points(points) if not ordered else points
         )
+
+    def validate_points(self, image_dimension):
+        """Make sure all the bounding box points are within an image's dimensions
+
+        Args:
+            image_dimension (np.array): array with the image's dimensions
+
+        Returns:
+            bool: whether the points are valid
+        """
+        tl_valid = point_within_dimensions(self.tl, image_dimension)
+        tr_valid = point_within_dimensions(self.tr, image_dimension)
+        br_valid = point_within_dimensions(self.br, image_dimension)
+        bl_valid = point_within_dimensions(self.bl, image_dimension)
+
+        return tl_valid and tr_valid and br_valid and bl_valid
 
     def to_xywh(self):
         """Returns the top-left point, width, and height
@@ -78,6 +94,14 @@ class BoundingBox:
             top_left[1] < bottom_right[1] and top_left[0] < bottom_right[0]
         ), "Invalid xyxy points: {}, {}".format(top_left, bottom_right)
 
+        # Make sure all points are positive
+        assert (
+            top_left[0] > 0 and top_left[1] > 0
+        ), "top_left point has negative value {}".format(top_left)
+        assert (
+            bottom_right[0] > 0 and bottom_right[1] > 0
+        ), "bottom_right point has negative value {}".format(bottom_right)
+
         tl = top_left
         br = bottom_right
         height = br[0] - tl[0]
@@ -89,6 +113,11 @@ class BoundingBox:
         return box
 
     def to_yolo(self, image_dimension):
+        # Make sure all points are within dimensions
+        assert self.validate_points(
+            image_dimension
+        ), "Some points of the bounding box lie outside of the image dimensions"
+
         cx, cy = self.center
 
         # Get normalized dimensions
@@ -98,6 +127,11 @@ class BoundingBox:
         cy = float(cy) / img_h
         w = float(self.width) / img_w
         h = float(self.height) / img_h
+
+        assert (
+            0.0 < cx < 1.0 and 0.0 < cy < 1.0 and 0.0 < w < 1.0 and 0.0 < h < 1.0
+        ), "All YOLO values should be normalize between [0, 1]."
+
         return np.array([cx, cy, w, h])
 
     @property

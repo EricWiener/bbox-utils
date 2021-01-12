@@ -134,6 +134,18 @@ def test_bounding_to_yolo():
     assert np.array_equal(bbox.to_yolo(image_dim), correct)
 
 
+def test_bounding_to_yolo_invalid_points():
+    """Test assertion is thrown when creating YOLO
+    coordinates with out of bound point"""
+    image_dim = (3648, 5472)
+    xy1 = np.array([3640, 78])
+    xy2 = np.array([3650, 100])
+    bbox = BoundingBox.from_xyxy(xy1, xy2)
+
+    with pytest.raises(AssertionError):
+        _ = bbox.to_yolo(image_dim)
+
+
 def test_bounding_box_center():
     xywh = np.array([2369, 2975, 74, 78])
     xy = xywh[:2]
