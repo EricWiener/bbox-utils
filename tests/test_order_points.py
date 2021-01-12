@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-from bbox.utils import order_points
+from bbox_utils.utils import order_points
 
 __author__ = "Eric Wiener"
 __copyright__ = "Eric Wiener"

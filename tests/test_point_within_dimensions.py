@@ -2,7 +2,7 @@
 import numpy as np
 import pytest
 
-from bbox.utils import point_within_dimensions
+from bbox_utils.utils import point_within_dimensions
 
 
 def test_point_within_dimensions_true():

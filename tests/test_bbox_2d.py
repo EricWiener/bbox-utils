@@ -2,7 +2,7 @@
 import numpy as np
 import pytest
 
-from bbox import BoundingBox
+from bbox_utils import BoundingBox
 
 __author__ = "Eric Wiener"
 __copyright__ = "Eric Wiener"
