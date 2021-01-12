@@ -63,6 +63,21 @@ class BoundingBox:
         Returns:
             BoundingBox: a new bounding box instance
         """
+        # First make sure that the top_left and bottom_right are correctly ordered
+        # We don't need to check top_left[1] < bottom_right[1]
+        # because if the x-coordinate is bad, but the y-coordinate is good,
+        # it will throw an assertion later
+        if top_left[0] > bottom_right[0]:
+            # top is below bottom, swap the points
+            temp = bottom_right
+            bottom_right = top_left
+            top_left = temp
+
+        # Make sure that the top_left is to left of the right point
+        assert (
+            top_left[1] < bottom_right[1] and top_left[0] < bottom_right[0]
+        ), "Invalid xyxy points: {}, {}".format(top_left, bottom_right)
+
         tl = top_left
         br = bottom_right
         height = br[0] - tl[0]

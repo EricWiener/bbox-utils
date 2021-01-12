@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import pytest
+
 import numpy as np
 
 from bbox_utils import BoundingBox
@@ -56,6 +58,50 @@ def test_box_from_xyxy():
     assert np.array_equal(xy, xy1)
     assert w == 70
     assert h == 40
+
+
+def test_box_from_xyxy_swapped_order():
+    """Test to see if bounding box can be created from XYXY
+    format when top_left and bottom_right are swapped"""
+    xy1 = np.array([2369, 2975])
+    xy2 = np.array([2369 + 40, 2975 + 70])
+    bbox = BoundingBox.from_xyxy(xy2, xy1)
+    xy, w, h = bbox.to_xywh()
+    assert np.array_equal(xy, xy1)
+    assert w == 70
+    assert h == 40
+
+
+def test_box_from_xyxy_horizontal_line():
+    """Test to see assertion thrown with invalid points (horizontal line)"""
+    xy1 = np.array([2369, 2975])
+    xy2 = np.array([2369, 2975 + 70])
+
+    with pytest.raises(AssertionError):
+        _ = BoundingBox.from_xyxy(xy1, xy2)
+
+    with pytest.raises(AssertionError):
+        _ = BoundingBox.from_xyxy(xy2, xy1)
+
+
+def test_box_from_xyxy_vertical_line():
+    """Test to see assertion thrown with invalid points (vertical line)"""
+    xy1 = np.array([2369, 2975])
+    xy2 = np.array([2369 + 70, 2975])
+
+    with pytest.raises(AssertionError):
+        _ = BoundingBox.from_xyxy(xy2, xy1)
+
+    with pytest.raises(AssertionError):
+        _ = BoundingBox.from_xyxy(xy1, xy2)
+
+
+def test_box_from_xyxy_same_point():
+    """Test to see assertion thrown with invalid points (points equal)"""
+    xy1 = np.array([2369, 2975])
+
+    with pytest.raises(AssertionError):
+        _ = BoundingBox.from_xyxy(xy1, xy1)
 
 
 def test_box_from_xywh():
