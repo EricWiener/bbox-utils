@@ -3,7 +3,7 @@ from pkg_resources import DistributionNotFound, get_distribution
 
 try:
     # Change here if project is renamed and does not equal the package name
-    dist_name = "bbox-utils"
+    dist_name = "bbox_utils"
     __version__ = get_distribution(dist_name).version
 except DistributionNotFound:  # pragma: no cover
     __version__ = "unknown"

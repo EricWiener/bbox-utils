@@ -6,6 +6,8 @@ bbox-utils allows you to easily convert between different bounding box formats (
 
 It's as simple to use as::
 
+    from bbox_utils import BoundingBox
+
     xy1 = np.array([100, 50])
     xy2 = np.array([200, 75])
     bbox = BoundingBox.from_xyxy(xy1, xy2)

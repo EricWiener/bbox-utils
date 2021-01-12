@@ -14,7 +14,7 @@ bbox-utils
 
 Utilities to easily convert between different bounding box formats (YOLO, XYWH, XYXY, etc.).
 
-You can install bbox-utils with PyPI: `pip install bbox-utils`.
+You can install bbox-utils with PyPI: ``$ pip install bbox-utils``.
 
 Description
 ===========
