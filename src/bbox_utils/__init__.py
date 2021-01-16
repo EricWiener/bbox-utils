@@ -15,5 +15,5 @@ except PackageNotFoundError:
 finally:
     del version, PackageNotFoundError
 
-from .bbox3d import BoundingBox3D  # noqa: F401
 from .bbox_2d import BoundingBox  # noqa: F401
+from .bbox_3d import BoundingBox3D  # noqa: F401
