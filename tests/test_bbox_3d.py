@@ -323,3 +323,29 @@ class TestBoundingBox3D:
             "q=(0.9997472337219893, 0.0, 0.0, 0.022482630300529462))"
         )
         assert repr(self.box) == representation
+
+    def test_triangle_vertices(self):
+        i = [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2]
+        j = [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3]
+        k = [0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6]
+        triangle_vertices = np.vstack([i, j, k])
+        assert np.array_equal(self.box.triangle_vertices, triangle_vertices)
+
+    def test_edges(self):
+        edges = np.array(
+            [
+                [0, 1],
+                [0, 3],
+                [0, 4],
+                [1, 2],
+                [1, 5],
+                [2, 3],
+                [2, 6],
+                [3, 7],
+                [4, 5],
+                [4, 7],
+                [5, 6],
+                [6, 7],
+            ]
+        )
+        assert np.array_equal(self.box.edges, edges)

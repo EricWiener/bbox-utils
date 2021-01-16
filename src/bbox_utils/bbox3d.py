@@ -316,3 +316,43 @@ class BoundingBox3D:
 
     def copy(self):
         return deepcopy(self)
+
+    @property
+    def triangle_vertices(self):
+        """Get triangle vertices to use when plotting a triangular mesh
+
+        Returns:
+            np.array: Triangular vertices of the cube
+        """
+        # Triangle vertex connections (for triangle meshes)
+        i = [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2]
+        j = [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3]
+        k = [0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6]
+        triangle_vertices = np.vstack([i, j, k])
+        return triangle_vertices
+
+    @property
+    def edges(self):
+        """Get the edge connections for the cube
+
+        Returns:
+            np.array: list of edges of the cube
+        """
+        # Create the edges
+        edges = np.array(
+            [
+                [0, 1],
+                [0, 3],
+                [0, 4],
+                [1, 2],
+                [1, 5],
+                [2, 3],
+                [2, 6],
+                [3, 7],
+                [4, 5],
+                [4, 7],
+                [5, 6],
+                [6, 7],
+            ]
+        )
+        return edges
