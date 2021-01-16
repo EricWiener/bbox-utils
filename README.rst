@@ -10,19 +10,21 @@ You can find documentation for the project at `here <https://bbox-utils.readthed
 
 **2D Bounding Box Conversions**
 
-- List of points [top left, top right, bottom right, bottom left]
-- XYWH: top left, width, height
-- XYXY: top left, bottom right
-- YOLO
+* List of points [top left, top right, bottom right, bottom left]
+* XYWH: top left, width, height
+* XYXY: top left, bottom right
+* YOLO
 
 **3D Bounding Box Conversions**
 You can create a 3D bounding box with either:
 
-- A center point, width, height, depth, and rotation
-- The eight vertices
+* A center point, width, height, depth, and rotation
+* The back-bottom-left point, width, height, depth, and rotation
 
-You can convert between the two forms and also get a
-triangular polygon to use for plotting triangular meshes.
+You can convert between the two forms and also get a triangular polygon to use for plotting triangular meshes.
+
+The majority of the 3D Bounding Box implementation comes from the `bbox PyPI package
+<https://github.com/varunagrawal/bbox>`_.
 
 Making Changes & Contributing
 =============================
