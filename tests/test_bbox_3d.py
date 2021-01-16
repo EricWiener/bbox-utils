@@ -2,10 +2,10 @@ import numpy as np
 import pytest
 from PIL import Image, ImageDraw
 
-from bbox_utils import BBox3D
+from bbox_utils import BoundingBox3D
 
 
-class TestBBox3d:
+class TestBoundingBox3D:
     @classmethod
     def setup_class(cls):
         # sample cuboid
@@ -31,7 +31,7 @@ class TestBBox3d:
         dim = cuboid["dimensions"]
         rotation = cuboid["rotation"]
 
-        cls.box = BBox3D(
+        cls.box = BoundingBox3D(
             center["x"],
             center["y"],
             center["z"],
@@ -80,12 +80,12 @@ class TestBBox3d:
         assert self.box.cz == self.cuboid["center"]["z"]
 
     def test_init_center(self):
-        box = BBox3D(*[self.box.cx, self.box.cy, self.box.cz], is_center=True)
+        box = BoundingBox3D(*[self.box.cx, self.box.cy, self.box.cz], is_center=True)
         assert np.array_equal(box.center, self.box.center)
 
     def test_init_non_center(self):
         cx, cy, cz = self.box.cx, self.box.cy, self.box.cz
-        box = BBox3D(
+        box = BoundingBox3D(
             cx - self.box.length / 2,
             cy - self.box.width / 2,
             cz - self.box.height / 2,
@@ -116,11 +116,11 @@ class TestBBox3d:
         # alternative attribute for the quaternion
         assert np.array_equal(self.box.quaternion, q)
 
-        box = BBox3D(self.box.cx, self.box.cy, self.box.cz, q=self.box.q)
+        box = BoundingBox3D(self.box.cx, self.box.cy, self.box.cz, q=self.box.q)
         assert np.array_equal(self.box.q, box.q)
 
     def test_euler_angles(self):
-        box = BBox3D(
+        box = BoundingBox3D(
             3.163,
             z=2.468,
             y=34.677,
@@ -316,7 +316,8 @@ class TestBBox3d:
 
     def test_repr(self):
         representation = (
-            "BBox3D(x=-49.19743041908411, y=12.38666074615689, z=0.782056864653507), "
+            "BoundingBox3D(x=-49.19743041908411, y=12.38666074615689, "
+            "z=0.782056864653507), "
             "length=5.340892485711914, width=2.457703972075464, "
             "height=1.9422248281533563, "
             "q=(0.9997472337219893, 0.0, 0.0, 0.022482630300529462))"

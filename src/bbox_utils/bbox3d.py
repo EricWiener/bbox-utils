@@ -9,7 +9,7 @@ import numpy as np
 from pyquaternion import Quaternion
 
 
-class BBox3D:
+class BoundingBox3D:
     """
     Class for 3D Bounding Boxes (3-orthotope).
     It takes either the center of the 3D bounding box or the \
@@ -298,7 +298,7 @@ class BBox3D:
 
     def __repr__(self):
         template = (
-            "BBox3D(x={cx}, y={cy}, z={cz}), length={l}, width={w}, height={h}, "
+            "BoundingBox3D(x={cx}, y={cy}, z={cz}), length={l}, width={w}, height={h}, "
             "q=({rw}, {rx}, {ry}, {rz}))"
         )
         return template.format(
