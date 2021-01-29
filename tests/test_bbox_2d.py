@@ -127,6 +127,18 @@ def test_bounding_to_yolo():
     assert np.allclose(yolo, correct)
 
 
+def test_bounding_from_yolo():
+    image_dim = np.array([5472, 3648])
+    xy = np.array([0.65953947, 0.55080409])
+    w = 0.02028509
+    h = 0.01425439
+    bbox = BoundingBox.from_yolo(xy, w, h, image_dim)
+    output_xy, output_w, output_h = bbox.to_xywh()
+    assert np.array_equal(np.array([2369, 2975]), output_xy)
+    assert output_w == 74
+    assert output_h == 78
+
+
 def test_bounding_to_yolo_invalid_points():
     """Test assertion is thrown when creating YOLO
     coordinates with out of bound point"""

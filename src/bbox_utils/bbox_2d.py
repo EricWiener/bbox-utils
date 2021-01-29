@@ -1,6 +1,11 @@
 import numpy as np
 
-from bbox_utils.utils import order_points, point_within_dimensions
+from bbox_utils.utils import (
+    order_points,
+    point_within_dimensions,
+    round_np,
+    round_scalar,
+)
 
 
 class BoundingBox:
@@ -44,7 +49,7 @@ class BoundingBox:
         Returns:
             tuple: tuple of form (np.array, float, float)
         """
-        return self.tl.astype(int), int(self.width), int(self.height)
+        return round_np(self.tl), round_scalar(self.width), round_scalar(self.height)
 
     @staticmethod
     def from_xywh(top_left, width, height):
@@ -72,7 +77,7 @@ class BoundingBox:
         Returns:
             tuple: tuple of form (np.array, np.array)
         """
-        return self.tl.astype(int), self.br.astype(int)
+        return round_np(self.tl), round_np(self.br)
 
     @staticmethod
     def from_xyxy(top_left, bottom_right):
@@ -154,6 +159,33 @@ class BoundingBox:
 
         return np.array([cx, cy, w, h])
 
+    @staticmethod
+    def from_yolo(center, width, height, image_dimension):
+        """Create a bounding box object from YOLO formatted data
+
+        Args:
+            center (np.array): the center coordinate of the box (x, y).
+                Scaled [0, 1]
+            width (float): the width of the bounding box [0, 1]
+            height (float): the height of the bounding box [0, 1]
+            image_dimension (np.array): the dimensions of the image (row, cols)
+
+        Returns:
+            BoundingBox: a new bounding box instance
+        """
+        center_x, center_y = center
+        img_height, img_width = image_dimension[:2]
+        cx = center_x * img_width
+        cy = center_y * img_height
+        box_width = width * img_width
+        box_height = height * img_height
+
+        tl_x = cx - box_width / 2
+        tl_y = cy - box_height / 2
+        tl = tl_x, tl_y
+
+        return BoundingBox.from_xywh(tl, box_width, box_height)
+
     @property
     def center(self):
         """Returns the center point of the bounding box as (x, y)
@@ -163,7 +195,7 @@ class BoundingBox:
         """
         x = self.tl[0] + self.width // 2
         y = self.tl[1] + self.height // 2
-        return np.array([x, y]).astype(int)
+        return round_np(np.array([x, y]))
 
     @property
     def width(self):

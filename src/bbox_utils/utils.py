@@ -80,3 +80,27 @@ def point_within_dimensions(point, image_dimensions):
         within_bounds = within_bounds and 0 <= val < image_dimensions[i]
 
     return within_bounds
+
+
+def round_scalar(scalar):
+    """Rounds a scalar to the nearest integer
+
+    Args:
+        scalar (float): scalar to round
+
+    Returns:
+        int: input rounded to the nearest int
+    """
+    return int(round(scalar))
+
+
+def round_np(np_arr):
+    """Rounds values in a numpy array to the nearest integer
+
+    Args:
+        np_arr (np.array): numpy array to round
+
+    Returns:
+        np.array(int32): numpy array of type np.int32
+    """
+    return np.rint(np_arr).astype(np.int32)
