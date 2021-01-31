@@ -224,9 +224,9 @@ class BoundingBox3D:
     @property
     def p2(self):
         """
-        :py:class:`float`: Front-left-bottom point.
+        :py:class:`float`: Back-right-bottom point.
         """
-        p = np.array([self._l / 2, -self._w / 2, -self._h / 2])
+        p = np.array([-self._l / 2, self._w / 2, -self._h / 2])
         p = self.__transform(p)
         return p
 
@@ -242,9 +242,9 @@ class BoundingBox3D:
     @property
     def p4(self):
         """
-        :py:class:`float`: Back-right-bottom point.
+        :py:class:`float`: Front-left-bottom point.
         """
-        p = np.array([-self._l / 2, self._w / 2, -self._h / 2])
+        p = np.array([self._l / 2, -self._w / 2, -self._h / 2])
         p = self.__transform(p)
         return p
 
@@ -260,9 +260,9 @@ class BoundingBox3D:
     @property
     def p6(self):
         """
-        :py:class:`float`: Front-left-top point.
+        :py:class:`float`: Back-right-top point.
         """
-        p = np.array([self._l / 2, -self._w / 2, self._h / 2])
+        p = np.array([-self._l / 2, self._w / 2, self._h / 2])
         p = self.__transform(p)
         return p
 
@@ -278,9 +278,9 @@ class BoundingBox3D:
     @property
     def p8(self):
         """
-        :py:class:`float`: Back-right-top point.
+        :py:class:`float`: Front-left-top point.
         """
-        p = np.array([-self._l / 2, self._w / 2, self._h / 2])
+        p = np.array([self._l / 2, -self._w / 2, self._h / 2])
         p = self.__transform(p)
         return p
 
@@ -290,6 +290,8 @@ class BoundingBox3D:
         Attribute to access ndarray of all corners of box in order.
         Returns:
             :py:class:`ndarray` of float: All corners of the bounding box in order.
+            The order goes bottom->top and clockwise starting from the bottom-left
+            point.
         """
         x = np.vstack(
             [self.p1, self.p2, self.p3, self.p4, self.p5, self.p6, self.p7, self.p8]
