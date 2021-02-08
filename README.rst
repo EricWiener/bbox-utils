@@ -26,6 +26,21 @@ You can convert between the two forms and also get a triangular polygon to use f
 The majority of the 3D Bounding Box implementation comes from the `bbox PyPI package
 <https://github.com/varunagrawal/bbox>`_.
 
+**Visualizations**
+You can use `bbox-utils` to visualize annotations within point clouds or images.
+
+To use point clouds, you will need to install `open3d <http://www.open3d.org/docs/release/getting_started.html>`_
+and `plotly <https://plotly.com/python/getting-started/>`_ with either::
+
+    pip3 install open3d plotly==4.14.3
+    pip install
+    # or
+    conda install -c open3d-admin open3d
+    conda install -c plotly plotly=4.14.3
+
+At the time of writing this, `open3d` requires Python < 3.9
+
+
 Making Changes & Contributing
 =============================
 

@@ -1,11 +1,47 @@
 import numpy as np
+import open3d as o3d
 import plotly.express as px
 import plotly.graph_objects as go
 
-from .visualizer_3d import Visualizer3D
+from bbox_utils.utils import in_google_colab
 
 
-class Visualizer3DPlotly(Visualizer3D):
+class PointCloud:
+    def __init__(self, point_cloud, *args, **kwargs):
+        """Create a 3D Visualizer.
+
+        Args:
+            image (obj): a valid image object
+        """
+        self.in_colab = in_google_colab()
+
+        if PointCloud.validate_point_cloud(point_cloud):
+            self.point_cloud = point_cloud
+        else:
+            raise TypeError("Visualizer3D received invalid point cloud")
+
+    @classmethod
+    def validate_point_cloud(cls, point_cloud):
+        """Validates the point cloud
+
+        Args:
+            image (obj): image to validate
+
+        Returns:
+            bool: whether the image is valid.
+        """
+        return True
+
+    @classmethod
+    def load_from_file(cls, file_path, *args, **kwargs):
+        """Loads a point cloud from a file
+
+        Args:
+            file_path (str): the path to the file
+        """
+        pcd = o3d.io.read_point_cloud(file_path)
+        return PointCloud(pcd)
+
     def display_bboxes(self, bboxes, colors, size=2, *args, **kwargs):
         """Display a list of bounding boxes
 
@@ -14,7 +50,7 @@ class Visualizer3DPlotly(Visualizer3D):
             color (str or list(str)): a list of colors for each bounding box.
                 Color should be specified in BGR.
         """
-        points = self.point_cloud.points
+        points = np.asarray(self.point_cloud.points)
 
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
@@ -59,3 +95,6 @@ class Visualizer3DPlotly(Visualizer3D):
                 Defaults to (0, 0, 255).
         """
         self.display_bboxes([bbox], [color], size)
+
+    def display(self, size=2):
+        self.display_bboxes([], colors=[], size=2)
