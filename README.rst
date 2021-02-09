@@ -40,6 +40,12 @@ and `plotly <https://plotly.com/python/getting-started/>`_ with either::
 
 At the time of writing this, `open3d` requires Python < 3.9
 
+To use images, you will need to install `OpenCV <https://opencv.org/>`_::
+
+    pip3 install opencv-python
+    # or
+    conda install opencv -c conda-forge
+
 
 Making Changes & Contributing
 =============================
