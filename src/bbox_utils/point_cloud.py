@@ -13,6 +13,9 @@ class PointCloud:
         """
         self.in_colab = in_google_colab()
 
+        # Used when running tests to disable GUI
+        self.display_gui = True
+
         if PointCloud.validate_point_cloud(point_cloud):
             self.point_cloud = point_cloud
         else:
@@ -28,8 +31,7 @@ class PointCloud:
         Returns:
             bool: whether the image is valid.
         """
-        # @TODO: implement this
-        return True
+        return isinstance(point_cloud, o3d.cpu.pybind.geometry.PointCloud)
 
     @classmethod
     def load_from_file(cls, file_path, *args, **kwargs):
@@ -41,7 +43,7 @@ class PointCloud:
         pcd = o3d.io.read_point_cloud(file_path)
         return PointCloud(pcd)
 
-    def display_bboxes(self, bboxes, colors, size=2, *args, **kwargs):
+    def display_bboxes(self, bboxes, colors="#ff0000", size=2, *args, **kwargs):
         """Display a list of bounding boxes
 
         Args:
@@ -133,7 +135,11 @@ class PointCloud:
             )
 
         fig = go.Figure(data=data)
-        fig.show()
+
+        if self.display_gui:  # pragma: no cover
+            fig.show()
+
+        return fig
 
     def display_bbox(self, bbox, color="#ff0000", size=2, *args, **kwargs):
         """Display a single bounding box
@@ -141,11 +147,14 @@ class PointCloud:
         Args:
             bbox (BoundingBox): a single bounding box
             color (string, optional): a valid Plotly color. Defaults to '#ff0000'
+
+        Returns:
+            Figure: a Plotly figure
         """
-        self.display_bboxes([bbox], [color], size)
+        return self.display_bboxes([bbox], [color], size)
 
     def display(self, size=2):
-        self.display_bboxes([], colors=[], size=2)
+        return self.display_bboxes([], colors=[], size=2)
 
     @property
     def points(self):
