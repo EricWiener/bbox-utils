@@ -1,7 +1,5 @@
 import numpy as np
 import open3d as o3d
-import plotly.express as px
-import plotly.graph_objects as go
 
 from bbox_utils.utils import in_google_colab
 
@@ -93,6 +91,10 @@ class PointCloud:
                   - A number that will be interpreted as a color
                   according to mesh3d.colorscale
         """
+        # Lazy import to allow someone to use PointCloud without installing Plotly
+        import plotly.express as px
+        import plotly.graph_objects as go
+
         points = self.points
 
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
