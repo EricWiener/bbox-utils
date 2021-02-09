@@ -132,7 +132,7 @@ class BoundingBox3D:
         if not np.isscalar(x):
             raise ValueError("Value should be a scalar")
         else:  # x is a scalar so we check for numeric type
-            if not isinstance(x, (np.float, np.int)):
+            if not isinstance(x, (float, int)):
                 raise TypeError("Value needs to be either a float or an int")
         return x
 
