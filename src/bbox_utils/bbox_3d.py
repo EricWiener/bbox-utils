@@ -23,8 +23,11 @@ class BoundingBox3D:
         z (:py:class:`float`): Z axis coordinate of 3D bounding box. \
             Can be either center of bounding box or back-bottom-left corner.
         length (:py:class:`float`, optional): The length of the box (default is 1).
+            This corresponds to the dimension along the x-axis.
         width (:py:class:`float`, optional): The width of the box (default is 1).
+            This corresponds to the dimension along the y-axis.
         height (:py:class:`float`, optional): The height of the box (default is 1).
+            This corresponds to the dimension along the z-axis.
         rw (:py:class:`float`, optional): The real part of the rotation quaternion \
             (default is 1).
         rx (:py:class:`int`, optional): The first element of the quaternion vector \
@@ -67,7 +70,7 @@ class BoundingBox3D:
 
         self._w, self._h, self._l = width, height, length
 
-        if euler_angles:
+        if euler_angles is not None:
             # we need to apply y, z and x rotations in order
             # http://www.euclideanspace.com/maths/geometry/rotations/euler/index.htm
             self._q = (
@@ -80,6 +83,31 @@ class BoundingBox3D:
             self._q = Quaternion(q)
         else:
             self._q = Quaternion(rw, rx, ry, rz)
+
+    @classmethod
+    def from_center_dimension_euler(cls, center, dimension, euler_angles=None):
+        """Factory function to create BoundingBox3D from center, dimension, and euler arrays.
+        Can pass in either np.arrays or Python lists.
+
+        Args:
+            center (list): list of length 3
+            dimension (list): list of length 3
+            euler_angles (list, optional): list of length 3. Defaults to None.
+
+        Returns:
+            BoundingBox3D: a new 3D bounding box object
+        """
+        x, y, z = center
+        length, width, height = dimension
+        return BoundingBox3D(
+            x=x,
+            y=y,
+            z=z,
+            length=length,
+            width=width,
+            height=height,
+            euler_angles=euler_angles,
+        )
 
     @property
     def center(self):
@@ -104,7 +132,7 @@ class BoundingBox3D:
         if not np.isscalar(x):
             raise ValueError("Value should be a scalar")
         else:  # x is a scalar so we check for numeric type
-            if not isinstance(x, (np.float, np.int)):
+            if not isinstance(x, (float, int)):
                 raise TypeError("Value needs to be either a float or an int")
         return x
 

@@ -104,3 +104,17 @@ def round_np(np_arr):
         np.array(int32): numpy array of type np.int32
     """
     return np.rint(np_arr).astype(np.int32)
+
+
+def in_google_colab():
+    """Checks to see whether currently running in Google Colab.
+
+    Returns:
+        bool: True or False
+    """
+    try:  # pragma: no cover
+        import google.colab  # noqa
+
+        return True
+    except:  # noqa
+        return False
