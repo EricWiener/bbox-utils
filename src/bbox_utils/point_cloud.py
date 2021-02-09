@@ -8,17 +8,17 @@ from bbox_utils.utils import in_google_colab
 
 class PointCloud:
     def __init__(self, point_cloud, *args, **kwargs):
-        """Create a 3D Visualizer.
+        """Create a point cloud.
 
         Args:
-            image (obj): a valid image object
+            point_cloud (obj): a valid Open3D point cloud
         """
         self.in_colab = in_google_colab()
 
         if PointCloud.validate_point_cloud(point_cloud):
             self.point_cloud = point_cloud
         else:
-            raise TypeError("Visualizer3D received invalid point cloud")
+            raise TypeError("PointCloud received invalid point cloud")
 
     @classmethod
     def validate_point_cloud(cls, point_cloud):
@@ -30,6 +30,7 @@ class PointCloud:
         Returns:
             bool: whether the image is valid.
         """
+        # @TODO: implement this
         return True
 
     @classmethod
@@ -47,10 +48,52 @@ class PointCloud:
 
         Args:
             bboxes (list(BoundingBox)): a list of bounding boxes
-            color (str or list(str)): a list of colors for each bounding box.
-                Color should be specified in BGR.
+            color (str or list(str)): a valid Plotly color:
+                The 'color' property is a color and may be specified as:
+                  - A hex string (e.g. '#ff0000')
+                  - An rgb/rgba string (e.g. 'rgb(255,0,0)')
+                  - An hsl/hsla string (e.g. 'hsl(0,100%,50%)')
+                  - An hsv/hsva string (e.g. 'hsv(0,100%,100%)')
+                  - A named CSS color:
+                      aliceblue, antiquewhite, aqua, aquamarine, azure,
+                      beige, bisque, black, blanchedalmond, blue,
+                      blueviolet, brown, burlywood, cadetblue,
+                      chartreuse, chocolate, coral, cornflowerblue,
+                      cornsilk, crimson, cyan, darkblue, darkcyan,
+                      darkgoldenrod, darkgray, darkgrey, darkgreen,
+                      darkkhaki, darkmagenta, darkolivegreen, darkorange,
+                      darkorchid, darkred, darksalmon, darkseagreen,
+                      darkslateblue, darkslategray, darkslategrey,
+                      darkturquoise, darkviolet, deeppink, deepskyblue,
+                      dimgray, dimgrey, dodgerblue, firebrick,
+                      floralwhite, forestgreen, fuchsia, gainsboro,
+                      ghostwhite, gold, goldenrod, gray, grey, green,
+                      greenyellow, honeydew, hotpink, indianred, indigo,
+                      ivory, khaki, lavender, lavenderblush, lawngreen,
+                      lemonchiffon, lightblue, lightcoral, lightcyan,
+                      lightgoldenrodyellow, lightgray, lightgrey,
+                      lightgreen, lightpink, lightsalmon, lightseagreen,
+                      lightskyblue, lightslategray, lightslategrey,
+                      lightsteelblue, lightyellow, lime, limegreen,
+                      linen, magenta, maroon, mediumaquamarine,
+                      mediumblue, mediumorchid, mediumpurple,
+                      mediumseagreen, mediumslateblue, mediumspringgreen,
+                      mediumturquoise, mediumvioletred, midnightblue,
+                      mintcream, mistyrose, moccasin, navajowhite, navy,
+                      oldlace, olive, olivedrab, orange, orangered,
+                      orchid, palegoldenrod, palegreen, paleturquoise,
+                      palevioletred, papayawhip, peachpuff, peru, pink,
+                      plum, powderblue, purple, red, rosybrown,
+                      royalblue, rebeccapurple, saddlebrown, salmon,
+                      sandybrown, seagreen, seashell, sienna, silver,
+                      skyblue, slateblue, slategray, slategrey, snow,
+                      springgreen, steelblue, tan, teal, thistle, tomato,
+                      turquoise, violet, wheat, white, whitesmoke,
+                      yellow, yellowgreen
+                  - A number that will be interpreted as a color
+                  according to mesh3d.colorscale
         """
-        points = np.asarray(self.point_cloud.points)
+        points = self.points
 
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
@@ -86,15 +129,70 @@ class PointCloud:
         fig = go.Figure(data=data)
         fig.show()
 
-    def display_bbox(self, bbox, color=(0, 0, 255), size=2, *args, **kwargs):
+    def display_bbox(self, bbox, color="#ff0000", size=2, *args, **kwargs):
         """Display a single bounding box
 
         Args:
             bbox (BoundingBox): a single bounding box
-            color (tuple, optional): color of the bounding box in BGR.
-                Defaults to (0, 0, 255).
+            color (string, optional): a valid Plotly color. Defaults to '#ff0000'
         """
         self.display_bboxes([bbox], [color], size)
 
     def display(self, size=2):
         self.display_bboxes([], colors=[], size=2)
+
+    @property
+    def points(self):
+        """Get a np.ndarray representation of the point cloud.
+
+        Returns:
+            np.ndarray: the point cloud's points
+        """
+        return np.asarray(self.point_cloud.points)
+
+    @property
+    def number_of_points(self):
+        """The number of points within a point cloud.
+
+        Returns:
+            int: the number of points within a point cloud.
+        """
+        return len(self.points)
+
+    def crop(self, bbox):
+        """Extract a point cloud from a 3D bounding box.
+
+        Source: https://stackoverflow.com/a/65350251/6942666
+
+        Args:
+            bbox (BoundingBox3D): a 3D bounding box
+
+        Returns:
+            PointCloud: a new point cloud with just the points within
+                the bounding box.
+        """
+        # Convert the corners array to have type float64
+        bounding_polygon = bbox.p.astype("float64")
+
+        # Create a SelectionPolygonVolume
+        vol = o3d.visualization.SelectionPolygonVolume()
+
+        # You need to specify what axis to orient the polygon to.
+        # I choose the "Y" axis. I made the max value the maximum Y of
+        # the polygon vertices and the min value the minimum Y of the
+        # polygon vertices.
+        vol.orthogonal_axis = "Y"
+        vol.axis_max = np.max(bounding_polygon[:, 1])
+        vol.axis_min = np.min(bounding_polygon[:, 1])
+
+        # Set all the Y values to 0 (they aren't needed since we specified what they
+        # should be using just vol.axis_max and vol.axis_min).
+        bounding_polygon[:, 1] = 0
+
+        # Convert the np.array to a Vector3dVector
+        vol.bounding_polygon = o3d.utility.Vector3dVector(bounding_polygon)
+
+        # Crop the point cloud using the Vector3dVector
+        cropped_pcd = vol.crop_point_cloud(self.point_cloud)
+
+        return PointCloud(cropped_pcd)
