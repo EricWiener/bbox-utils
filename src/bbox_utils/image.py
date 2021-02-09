@@ -51,7 +51,7 @@ class Image:
 
         for idx, bbox in enumerate(bboxes):
             xy1, xy2 = bbox.to_xyxy()
-            cv2.rectangle(image, xy1, xy2, colors[idx], 2)
+            cv2.rectangle(image, tuple(xy1), tuple(xy2), colors[idx], 2)
 
         self.display(image)
 

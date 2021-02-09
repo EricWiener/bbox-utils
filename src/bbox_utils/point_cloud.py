@@ -107,6 +107,10 @@ class PointCloud:
         # The PCD scatter
         data = [go.Scatter3d(x=x, y=y, z=z, mode="markers", marker=dict(size=size))]
 
+        # Create a list of colors if colors is just a single string
+        if isinstance(colors, str):
+            colors = [colors for i in range(0, len(bboxes))]
+
         # Add any annotations
         for idx, bbox in enumerate(bboxes):
             # Get corners and triangle vertices
