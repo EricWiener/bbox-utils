@@ -11,8 +11,6 @@ class Image:
         """
         if Image.validate_image(image):
             self.image = image
-        else:
-            raise TypeError("Visualizer2D received invalid image")
 
     @classmethod
     def validate_image(cls, image):
@@ -24,10 +22,15 @@ class Image:
         Returns:
             bool: whether the image is valid.
         """
-        if isinstance(image, np.ndarray):
-            return True
-        else:
-            raise TypeError("Visualizer_CV2 must be initialized with a np.ndarry")
+        if not isinstance(image, np.ndarray):
+            raise TypeError("Image must be initialized with a np.ndarry")
+
+        if image.ndim < 2:
+            raise ValueError(
+                "Image must be initialized with a np.ndarray with >= 2 dimensions"
+            )
+
+        return True
 
     @classmethod
     def load_from_file(cls, file_path, *args, **kwargs):
@@ -39,7 +42,7 @@ class Image:
         image = cv2.imread(file_path)
         return Image(image)
 
-    def display_bboxes(self, bboxes, colors, *args, **kwargs):
+    def display_bboxes(self, bboxes, colors, *args, **kwargs):  # pragma: no cover
         """Display a list of bounding boxes
 
         Args:
@@ -55,7 +58,9 @@ class Image:
 
         self.display(image)
 
-    def display_bbox(self, bbox, color=(0, 0, 255), *args, **kwargs):
+    def display_bbox(
+        self, bbox, color=(0, 0, 255), *args, **kwargs
+    ):  # pragma: no cover
         """Display a single bounding box
 
         Args:
@@ -65,7 +70,7 @@ class Image:
         """
         self.display_bboxes([bbox], [color])
 
-    def display(self, image=None, title=None, library="matplotlib"):
+    def display(self, image=None, title=None, library="matplotlib"):  # pragma: no cover
         """Display an image using a library of your choice.
 
         Args:
@@ -95,7 +100,7 @@ class Image:
             )
 
     @classmethod
-    def display_matplotlib(cls, image, title=None):
+    def display_matplotlib(cls, image, title=None):  # pragma: no cover
         """Display an image using matplotlib.
 
         Args:
@@ -111,7 +116,7 @@ class Image:
         plt.show()
 
     @classmethod
-    def display_cv2(cls, image, title=None):
+    def display_cv2(cls, image, title=None):  # pragma: no cover
         """Display an image using OpenCV.
 
         Args:

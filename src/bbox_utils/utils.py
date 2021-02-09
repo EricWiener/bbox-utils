@@ -112,7 +112,7 @@ def in_google_colab():
     Returns:
         bool: True or False
     """
-    try:
+    try:  # pragma: no cover
         import google.colab  # noqa
 
         return True
