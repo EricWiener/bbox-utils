@@ -9,6 +9,10 @@ Description
 You can find documentation for the project at `here <https://bbox-utils.readthedocs.io/en/latest/>`_.
 
 **2D Bounding Box Conversions**
+|Colab Image Demo|
+
+.. |Colab Image Demo| image:: https://colab.research.google.com/assets/colab-badge.svg
+   :target: https://colab.research.google.com/drive/1NGiNhftz-hy671IHdOidkqgnaxaZ88Kn?usp=sharing
 
 * List of points [top left, top right, bottom right, bottom left]
 * XYWH: top left, width, height
@@ -16,6 +20,11 @@ You can find documentation for the project at `here <https://bbox-utils.readthed
 * YOLO
 
 **3D Bounding Box Conversions**
+|Colab PCD Demo|
+
+.. |Colab PCD Demo| image:: https://colab.research.google.com/assets/colab-badge.svg
+   :target: https://colab.research.google.com/drive/1NR9fR5hWHDtNcOyp8U0nPPjeuXR_auxd?usp=sharing
+
 You can create a 3D bounding box with either:
 
 * A center point, width, height, depth, and rotation
