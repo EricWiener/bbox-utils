@@ -109,6 +109,23 @@ class BoundingBox3D:
             euler_angles=euler_angles,
         )
 
+    @classmethod
+    def from_xyzxyz(cls, xyz1, xyz2):
+        x1, y1, z1 = xyz1
+        x2, y2, z2 = xyz2
+        length, width, height = abs(x2 - x1), abs(y2 - y1), abs(z2 - z1)
+        min_x = min(x1, x2)
+        min_y = min(y1, y2)
+        min_z = min(z1, z2)
+
+        c_x = min_x + length // 2
+        c_y = min_y + width // 2
+        c_z = min_z + height // 2
+
+        return BoundingBox3D(
+            x=c_x, y=c_y, z=c_z, length=length, width=width, height=height
+        )
+
     @property
     def center(self):
         """

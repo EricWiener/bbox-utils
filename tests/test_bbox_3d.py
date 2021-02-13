@@ -349,3 +349,29 @@ class TestBoundingBox3D:
             ]
         )
         assert np.array_equal(self.box.edges, edges)
+
+
+def test_from_xyz_xyz():
+    xyz1 = [10, 0, 0]
+    xyz2 = [50, 60, 70]
+
+    # Test with smallest, largest
+    bbox = BoundingBox3D.from_xyzxyz(xyz1, xyz2)
+    assert np.allclose(bbox.center, np.array([30, 30, 35]))
+
+    # Test with largest, smallest point
+    # The order of the points should not matter
+    bbox = BoundingBox3D.from_xyzxyz(xyz2, xyz1)
+    assert np.allclose(bbox.center, np.array([30, 30, 35]))
+
+    # Make sure the dimensions are correct
+    assert bbox.length == 40
+    assert bbox.width == 60
+    assert bbox.height == 70
+
+    # Test with a different set of opposite points
+    # No longer absolute min and absolute max
+    xyz1 = [10, 0, 70]
+    xyz2 = [50, 60, 0]
+    bbox = BoundingBox3D.from_xyzxyz(xyz2, xyz1)
+    assert np.allclose(bbox.center, np.array([30, 30, 35]))
