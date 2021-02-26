@@ -165,7 +165,7 @@ html_theme = "sphinx_rtd_theme"
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from bbox import __version__ as version
+    from bbox_utils import __version__ as version
 except ImportError:
     pass
 else:
