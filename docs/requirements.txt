@@ -1,4 +1,9 @@
-numpy
+numpy>=1.13.3
+open3d
+opencv-python
+pillow
+plotly==4.14.3
+pyquaternion
 # Requirements file for ReadTheDocs, check .readthedocs.yml.
 # To build the module reference correctly, make sure every external package
 # under `install_requires` in `setup.cfg` is also listed here!
