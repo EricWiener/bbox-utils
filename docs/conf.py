@@ -12,6 +12,14 @@ import sys
 import inspect
 import shutil
 import sphinx_rtd_theme
+from unittest import mock
+
+# Mock open3d because it fails to build in readthedocs
+# Source: http://blog.rtwilson.com/how-to-make-your-sphinx-documentation-compile-with-readthedocs-when-youre-using-numpy-and-scipy/
+MOCK_MODULES = ["open3d"]
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
+
 
 # -- Path setup --------------------------------------------------------------
 
