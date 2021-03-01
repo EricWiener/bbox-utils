@@ -26,6 +26,8 @@ install:
 before_script:
   - git config --global user.email "ericwiener3@gmail.com"
   - git config --global user.name "Eric Wiener"
+  # Install for open3d
+  - sudo apt-get -y install libusb-1.0-0-dev
   # Useful information in case of debug
   - if [[ "$DISTRIB" == "conda" ]]; then conda info -a; fi
   - which tox
